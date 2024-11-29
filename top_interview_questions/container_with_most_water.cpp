@@ -10,13 +10,22 @@ public:
         int left_id = 0;
         int right_id = height.size() - 1;
 
-        long maxArea = getArea(left_id, right_id, height);
+
+        long maxArea;        
+        if(height[right_id] > height[left_id]) maxArea = (right_id-left_id)*height[left_id];
+        else maxArea = (right_id-left_id)*height[right_id];
+
         long area;
+
+        // somehow this line increases leetcodes engine runtime from 0ms to 4 ms
+        if(height[right_id] < height[left_id]) goto loop_2_entry;
 
         loop_1_entry:
         while(left_id < right_id){
             
-            area = getArea(left_id, right_id, height);
+            if(height[right_id] > height[left_id]) area = (right_id-left_id)*height[left_id];
+            else area = (right_id-left_id)*height[right_id];
+
 
             if(area > maxArea){
                 maxArea = area;
@@ -30,7 +39,9 @@ public:
         loop_2_entry:
         while(right_id > left_id){
 
-            area = getArea(left_id, right_id, height);
+
+            if(height[right_id] > height[left_id]) area = (right_id-left_id)*height[left_id];
+            else area = (right_id-left_id)*height[right_id];
 
             if(area > maxArea){
                 maxArea = area;
@@ -43,11 +54,6 @@ public:
 
         return maxArea;
         
-    }
-
-    static inline long getArea(const long &l, const long &r, const std::vector<int>& height){
-        if(height[r] > height[l]) return (r-l)*height[l];
-        return (r-l)*height[r];
     }
 };
 
