@@ -82,13 +82,13 @@ int main(int argc, char* argv[]){
         std::vector<int> testcase{1,2,3,4,5,6,7,8,9,10,11,12,13,14};
 
         Solution::ListNode* headptr = new Solution::ListNode(testcase[0]);
-        auto headptrcpy = headptr;
+        void* headptrcpy = headptr;
         for(int elem = 1; elem < testcase.size(); elem++){
             headptr->next = new Solution::ListNode(testcase[elem]);
             headptr = headptr->next;
         }
 
-        Solution::reverseKGroup(headptrcpy, 5)->print();
+        Solution::reverseKGroup((Solution::ListNode*)headptrcpy, 5)->print();
 
         std::cout<<std::endl;
     }
