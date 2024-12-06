@@ -12,6 +12,7 @@ struct Solution {
         ListNode(int x, ListNode *next) : val(x), next(next) {}
         ~ListNode() {
             if(next != nullptr) delete next;
+            next = nullptr;
         }
         void print(){
             std::cout<<val<<", ";
@@ -73,7 +74,11 @@ int main(int argc, char* argv[]){
             headptr = headptr->next;
         }
 
-        Solution::reverseKGroup(headptrcpy, 1)->print();
+        headptr = Solution::reverseKGroup(headptrcpy, 1);
+        headptrcpy = nullptr;
+        headptr->print();
+
+        delete headptr;
 
         std::cout<<std::endl;
     }
@@ -82,13 +87,18 @@ int main(int argc, char* argv[]){
         std::vector<int> testcase{1,2,3,4,5,6,7,8,9,10,11,12,13,14};
 
         Solution::ListNode* headptr = new Solution::ListNode(testcase[0]);
-        void* headptrcpy = headptr;
+        auto headptrcpy = headptr;
         for(int elem = 1; elem < testcase.size(); elem++){
             headptr->next = new Solution::ListNode(testcase[elem]);
             headptr = headptr->next;
         }
 
-        Solution::reverseKGroup((Solution::ListNode*)headptrcpy, 5)->print();
+
+        headptr = Solution::reverseKGroup(headptrcpy, 4);
+        headptrcpy = nullptr;
+        headptr->print();
+
+        delete headptr;
 
         std::cout<<std::endl;
     }
